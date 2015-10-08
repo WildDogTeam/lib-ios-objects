@@ -78,4 +78,3 @@ We would like to thank the following projects for helping us achieve our goals:
 Open Source:
 
 * [ios-firebase-objects](https://github.com/seanhess/ios-firebase-objects) FirebaseObjects is a repo with a few classes to make common firebase tasks easier
-* 
