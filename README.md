@@ -53,26 +53,29 @@ WilddogObjects是一个回调，用几个类配合wilddog实现一个同步的NS
     } onDisconnect:^{
         [self showDiconnectedScreen];
     }];
+    
+    ## 支持
+如果在使用过程中有任何问题，请提 [issue](https://github.com/WildDogTeam/demo-ios-objects/issues) ，我会在 Github 上给予帮助。
+
+## 相关文档
+
+* [Wilddog 概览](https://z.wilddog.com/overview/guide)
+* [IOS SDK快速入门](https://z.wilddog.com/ios/quickstart)
+* [IOS SDK 开发向导](https://z.wilddog.com/ios/guide/1)
+* [IOS SDK API](https://z.wilddog.com/ios/api)
+* [下载页面](https://www.wilddog.com/download/)
+* [Wilddog FAQ](https://z.wilddog.com/faq/qa)
 
 
+## License
+MIT
+http://wilddog.mit-license.org/
 
+## 感谢 Thanks
 
+We would like to thank the following projects for helping us achieve our goals:
 
+Open Source:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* [ios-firebase-objects](https://github.com/seanhess/ios-firebase-objects) FirebaseObjects is a repo with a few classes to make common firebase tasks easier
+* 
