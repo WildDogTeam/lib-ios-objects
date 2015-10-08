@@ -67,10 +67,6 @@ WilddogObjects是一个回调，用几个类配合wilddog实现一个同步的NS
 * [Wilddog FAQ](https://z.wilddog.com/faq/qa)
 
 
-## License
-MIT
-http://wilddog.mit-license.org/
-
 ## 感谢 Thanks
 
 We would like to thank the following projects for helping us achieve our goals:
