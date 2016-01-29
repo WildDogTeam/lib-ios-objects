@@ -64,7 +64,7 @@ WilddogObjects是一个回调，用几个类配合wilddog实现一个同步的NS
 * [IOS SDK 开发向导](https://z.wilddog.com/ios/guide/1)
 * [IOS SDK API](https://z.wilddog.com/ios/api)
 * [下载页面](https://www.wilddog.com/download/)
-* [Wilddog FAQ](https://z.wilddog.com/faq/qa)
+* [Wilddog FAQ](https://z.wilddog.com/faq/questions)
 
 
 ## 感谢 Thanks
