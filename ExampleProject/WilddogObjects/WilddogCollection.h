@@ -14,8 +14,8 @@
 // Keeps a dictionary in sync with the remote node, and creates local objects of the correct type
 @interface WilddogCollection : NSObject
 
-- (id)initWithNode:(Wilddog*)node dictionary:(NSMutableDictionary*)dictionary type:(Class)type;
-- (id)initWithNode:(Wilddog*)node dictionary:(NSMutableDictionary*)dictionary factory:(id(^)(NSDictionary*))factory;
+- (id)initWithNode:(WDGSyncReference*)node dictionary:(NSMutableDictionary*)dictionary type:(Class)type;
+- (id)initWithNode:(WDGSyncReference*)node dictionary:(NSMutableDictionary*)dictionary factory:(id(^)(NSDictionary*))factory;
 
 - (void)didAddChild:(void(^)(id))cb;
 - (void)didRemoveChild:(void(^)(id))cb;
@@ -29,6 +29,6 @@
 - (void)removeObject:(id)object;
 - (void)updateObject:(id<Objectable>)object;
 
-- (Wilddog*)nodeForObject:(id<Objectable>)obj;
+- (WDGSyncReference*)nodeForObject:(id<Objectable>)obj;
 
 @end

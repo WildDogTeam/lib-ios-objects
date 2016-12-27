@@ -9,7 +9,7 @@
 #import "WilddogCollection.h"
 
 @interface WilddogCollection ()
-@property (nonatomic, strong) Wilddog * node;
+@property (nonatomic, strong) WDGSyncReference * node;
 @property (nonatomic, strong) NSMutableDictionary * objects;
 @property (nonatomic, strong) NSMapTable * names;
 @property (nonatomic, strong) Class type;
@@ -20,13 +20,13 @@
 
 @implementation WilddogCollection
 
-- (id)initWithNode:(Wilddog*)node dictionary:(NSMutableDictionary *)dictionary type:(__unsafe_unretained Class)type {
+- (id)initWithNode:(WDGSyncReference*)node dictionary:(NSMutableDictionary *)dictionary type:(__unsafe_unretained Class)type {
     return [self initWithNode:node dictionary:dictionary factory:^(NSDictionary * value) {
         return [type new];
     }];
 }
 
-- (id)initWithNode:(Wilddog*)node dictionary:(NSMutableDictionary*)dictionary factory:(id(^)(NSDictionary*))factory {
+- (id)initWithNode:(WDGSyncReference*)node dictionary:(NSMutableDictionary*)dictionary factory:(id(^)(NSDictionary*))factory {
     self = [super init];
     if (self) {
         self.objects = dictionary;
@@ -38,7 +38,7 @@
         self.updateCb = ^(id obj) {};
         
         // find the correct object and update locally
-        [self.node observeEventType:WEventTypeChildAdded withBlock:^(WDataSnapshot *snapshot) {
+        [self.node observeEventType:WDGDataEventTypeChildAdded withBlock:^(WDGDataSnapshot * _Nonnull snapshot) {
             id<Objectable> obj = [self.objects objectForKey:snapshot.key];
             if (!obj) {
                 // add the object to the collection if it doesn't exist yet
@@ -49,15 +49,14 @@
             [obj setValuesForKeysWithDictionary:snapshot.value];
             self.addCb(obj);
         }];
-        
-        [self.node observeEventType:WEventTypeChildRemoved withBlock:^(WDataSnapshot *snapshot) {
+        [self.node observeEventType:WDGDataEventTypeChildRemoved withBlock:^(WDGDataSnapshot * _Nonnull snapshot) {
             id<Objectable> obj = [self.objects objectForKey:snapshot.key];
             if (!obj) return;
             [self.objects removeObjectForKey:snapshot.key];
             self.removeCb(obj);
         }];
         
-        [self.node observeEventType:WEventTypeChildChanged withBlock:^(WDataSnapshot *snapshot) {
+        [self.node observeEventType:WDGDataEventTypeChildChanged withBlock:^(WDGDataSnapshot * _Nonnull snapshot) {
             id<Objectable> obj = [self.objects objectForKey:snapshot.key];
             if (!obj) {
                 NSAssert(false, @"Object not found locally! %@", snapshot.key);
@@ -98,15 +97,15 @@
 }
 
 - (void)addObject:(id<Objectable>)obj withName:(NSString *)name onComplete:(void (^)(NSError*))cb {
-    [self addObject:obj withNode:[self.node childByAppendingPath:name] onComplete:cb];
+    [self addObject:obj withNode:[self.node child:name] onComplete:cb];
 }
 
-- (void)addObject:(id<Objectable>)obj withNode:(Wilddog*)objnode onComplete:(void(^)(NSError*))cb {
+- (void)addObject:(id<Objectable>)obj withNode:(WDGSyncReference*)objnode onComplete:(void(^)(NSError*))cb {
 
     [objnode onDisconnectRemoveValue];
     
-    [objnode setValue:obj.toObject withCompletionBlock:^(NSError *error, Wilddog *ref) {
-        
+    [objnode setValue:obj.toObject withCompletionBlock:^(NSError * _Nullable error, WDGSyncReference * _Nonnull ref) {
+
     }];
     
     
@@ -127,9 +126,9 @@
     [[self nodeForObject:obj] setValue:obj.toObject];
 }
 
-- (Wilddog*)nodeForObject:(id<Objectable>)obj {
+- (WDGSyncReference*)nodeForObject:(id<Objectable>)obj {
     NSString * name = [self.names objectForKey:obj];
-    Wilddog* objnode = [self.node childByAppendingPath:name];
+    WDGSyncReference* objnode = [self.node child:name];
     return objnode;
 }
 

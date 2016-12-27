@@ -10,7 +10,7 @@
 #import "WilddogCollection.h"
 #import <Wilddog/Wilddog.h>
 #import "User.h"
-
+#import "ViewController.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,21 +19,31 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
     
-    
-    Wilddog * wilddog = [[Wilddog alloc] initWithUrl:@"https://fake.wilddogio.com/stuff"];
+    //初始化 WDGApp
+    WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://<YOUR-FIREBASE-APPID>wilddogio.com"];
+    [WDGApp configureWithOptions:option];
+    //获取一个指向根节点的 WDGSyncReference 实例
+    WDGSyncReference *myRootRef = [[WDGSync sync] reference];
+
+    WDGSyncReference *refStaff = [myRootRef child:@"stuff"];
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    WilddogCollection * collection = [[WilddogCollection alloc] initWithNode:wilddog dictionary:dictionary type:[User class]];
-    
+    WilddogCollection * collection = [[WilddogCollection alloc] initWithNode:refStaff dictionary:dictionary type:[User class]];
+
     [collection didAddChild:^(User * user) {
         // created remotely or locally, it is called here
-        NSLog(@"New User %@", user);
+        NSLog(@"New User %@", user.name);
     }];
     
     User * me = [User new];
     me.name = @"me";
     [collection addObject:me];
-    
+
+
+    ViewController *viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    self.window.rootViewController = viewController;
+
     return YES;
 }
 
