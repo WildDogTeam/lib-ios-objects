@@ -1,4 +1,4 @@
-Pods
-.Ds_Store
+Pods/
+*.Ds_Store
 xcuserdata
 ExampleProject.xcworkspace
