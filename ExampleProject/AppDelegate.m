@@ -25,15 +25,15 @@
     WDGOptions *option = [[WDGOptions alloc] initWithSyncURL:@"https://<YOUR-FIREBASE-APPID>wilddogio.com"];
     [WDGApp configureWithOptions:option];
     //获取一个指向根节点的 WDGSyncReference 实例
-    WDGSyncReference *myRootRef = [[WDGSync sync] reference];
+    WDGSyncReference *rootRef = [[WDGSync sync] reference];
 
-    WDGSyncReference *refStaff = [myRootRef child:@"stuff"];
+    WDGSyncReference *refStaff = [rootRef child:@"stuff"];
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     WilddogCollection * collection = [[WilddogCollection alloc] initWithNode:refStaff dictionary:dictionary type:[User class]];
 
     [collection didAddChild:^(User * user) {
         // created remotely or locally, it is called here
-        NSLog(@"New User %@", user.name);
+        NSLog(@"New User %@", user);
     }];
     
     User * me = [User new];
