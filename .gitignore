@@ -1,4 +1,5 @@
+*.xcuserstate
+.DS_Store
 Pods/
-*.Ds_Store
-xcuserdata
-ExampleProject.xcworkspace
+Podfile.lock
+*.xcworkspace
